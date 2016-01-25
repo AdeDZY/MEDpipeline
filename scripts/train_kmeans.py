@@ -32,17 +32,14 @@ def main():
     args = parser.parse_args()
 
     # load MFCC features
-    print ">> loading MFCC..."
     X = load_mfcc(args.mfcc_csv_file)
-    print ">> load {0} vectors for clustering. ".format(len(X))
 
     # perform kmeans
-    print ">> training K-means..."
+    print ">> training K-means on {0} samples...".format(len(X))
     km = KMeans(args.cluster_num)
     km.fit(X)
 
     # save model
-    print ">> saving model..."
     outfile = open(args.output_file, 'wb')
     cPickle.dump(km, outfile)
     print "K-means model saved at {0}!".format(args.output_file)

@@ -82,7 +82,7 @@ def main():
 
         # output process
         n += 1
-        if n % 10 == 0:
+        if n % 50 == 0:
             print "{0} videos processed.".format(n)
 
     print "K-means features generated successfully! Featues are written into {0}!".format(args.output_file_path)

@@ -56,7 +56,6 @@ def main():
     args = parser.parse_args()
 
     # load training data
-    print ">> loading training data..."
     feat_file_path = args.feat_dir + '/all.vectors'
     X, y = load_training_data(args.event_name, feat_file_path)
 
@@ -66,7 +65,6 @@ def main():
     clf.fit(X, y)
 
     # save the trained model
-    print ">> saving model..."
     outfile = open(args.output_file, 'wb')
     cPickle.dump(clf,outfile)
     print ">> model saved to {0}!".format(args.output_file)
