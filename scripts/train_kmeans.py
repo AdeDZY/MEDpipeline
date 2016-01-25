@@ -2,7 +2,7 @@
 
 import numpy
 import os
-from sklearn.cluster import *
+from sklearn.cluster import KMeans
 import cPickle
 import argparse
 
@@ -14,7 +14,11 @@ def load_mfcc(mfcc_csv_file):
     :return: X. shape=(n_samples, n_features)
     """
     X = []
+    i = 0
     for line in open(mfcc_csv_file):
+        i += 1
+        if i%10 != 0:
+            continue
         x = [float(val) for val in line.split(';')]
         X.append(x)
     return X
@@ -30,15 +34,16 @@ def main():
     # load MFCC features
     print ">> loading MFCC..."
     X = load_mfcc(args.mfcc_csv_file)
+    print ">> load {0} vectors for clustering. ".format(len(X))
 
     # perform kmeans
     print ">> training K-means..."
-    km = Kmeans(args.cluster_num)
+    km = KMeans(args.cluster_num)
     km.fit(X)
 
     # save model
     print ">> saving model..."
-    outfile = open(args.output_file, 'w')
+    outfile = open(args.output_file, 'wb')
     cPickle.dump(km, outfile)
     print "K-means model saved at {0}!".format(args.output_file)
 
