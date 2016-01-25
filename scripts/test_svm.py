@@ -19,7 +19,7 @@ def load_test_data(feat_file_path):
     test_list = open("/home/ubuntu/hw1/list/test")
     videos = set()
     for line in test_list:
-        video = line.split()
+        video = line.strip()
         videos.add(video)
     test_list.close()
 
@@ -40,7 +40,7 @@ def load_test_data(feat_file_path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("modl_file", help="path of the trained svm file")
+    parser.add_argument("model_file", help="path of the trained svm file")
     parser.add_argument("feat_dir", help="dir of feature files")
     parser.add_argument("feat_dim", help="dimension of features")
     parser.add_argument("output_file", help="path to save the prediction score")
