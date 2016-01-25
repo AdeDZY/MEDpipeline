@@ -1,0 +1,12 @@
+audio/
+asr/
+config/
+kmeans/
+list/
+mAP/
+mfcc/
+temp/
+smile.log
+vocab
+select.mfcc.csv
+
