@@ -16,7 +16,7 @@ def load_test_data(feat_file_path, feat_dim):
     Each line represents a video. Line starts with video_name, than a '\t', than the feature vector
     :return: X, the test feature vectors. shape=(n_sample, n_feat)
     """
-    test_list = open("/home/ubuntu/hw1/list/test")
+    test_list = open("/home/ubuntu/hw1/list/test.video")
     videos = set()
     for line in test_list:
         video = line.strip()
@@ -56,13 +56,12 @@ def main():
 
     # predict with the log probability
     print ">> Predicting..."
-    T = clf.predict_log_proba(X)
+    T = clf.decision_function(X)
 
     # write results
     outfile = open(args.output_file, 'w')
-    for scores in T:
-        score = scores[0]
-        outfile.write(score + '\n')
+    for score in T:
+        outfile.write(str(score) + '\n')
     outfile.close()
     print ">> Prediction scores written to {0}!".format(args.output_file)
 
