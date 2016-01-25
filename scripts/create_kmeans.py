@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+__author__ = 'zhuyund'
 
 import numpy
 import cPickle
@@ -58,6 +59,8 @@ def main():
     # process each video
     n = 0
     for video_name in open(args.file_list):
+        video_name = video_name.strip()
+
         # load MFCC features
         mfcc_path = "/home/ubuntu/hw1/mfcc/{}.mfcc.csv".format(video_name.strip())
 
@@ -74,8 +77,8 @@ def main():
 
         # write new feature
         output_str = ';'.join([str(t) for t in v])
-        output_file.write(output_str)
-        output_file.write('\n')
+        output_file.write(video_name + '\t')
+        output_file.write(output_str + '\n')
 
         # output process
         n += 1
