@@ -1,4 +1,4 @@
-#!/bin/python 
+#!/usr/bin/env python
 __author__ = 'zhuyund'
 
 import numpy
@@ -19,7 +19,7 @@ def load_training_data(event_name, feat_file_path):
     X is the training feature vectors. shape=(n_sample, n_feat)
     y is the training labels. shape=(1, n_sample)
     """
-    event_train_list = open("/home/ubuntu/hw1/list/{0}_train")
+    event_train_list = open("/home/ubuntu/hw1/list/{0}_train".format(event_name))
     video2label = {}
     for line in event_train_list:
         video, label = line.split()
@@ -29,6 +29,9 @@ def load_training_data(event_name, feat_file_path):
     X = []
     y = []
     for line in open(feat_file_path):
+        line = line.strip()
+        if line == '-1':
+            continue
         video, feats = line.split('\t')
         if video not in video2label:
             continue
@@ -58,7 +61,7 @@ def main():
     X, y = load_training_data(args.event_name, feat_file_path)
 
     # train SVM
-    print ">> training SVM with {0} kernel".format(args.kernel)
+    print ">> training SVM with {0} kernel on {1} samples".format(args.kernel, len(y))
     clf = svm.SVC(kernel=args.kernel)
     clf.fit(X, y)
 
