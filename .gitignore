@@ -9,4 +9,4 @@ temp/
 smile.log
 vocab
 select.mfcc.csv
-
+*.model
