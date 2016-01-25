@@ -57,7 +57,7 @@ def main():
 
     # process each video
     n = 0
-    for video_name in open("file_list"):
+    for video_name in open(args.file_list):
         # load MFCC features
         mfcc_path = "/home/ubuntu/hw1/mfcc/{}.mfcc.csv".format(video_name.strip())
 

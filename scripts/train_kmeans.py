@@ -17,8 +17,8 @@ def load_mfcc(mfcc_csv_file):
     i = 0
     for line in open(mfcc_csv_file):
         i += 1
-        if i % 10 != 0:
-            continue
+        #if i % 10 != 0:
+        #    continue
         x = [float(val) for val in line.split(';')]
         X.append(x)
     return X
