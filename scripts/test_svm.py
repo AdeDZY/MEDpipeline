@@ -9,7 +9,7 @@ import sys
 import argparse
 
 
-def load_test_data(feat_file_path):
+def load_test_data(feat_file_path, feat_dim):
     """
     Load all test data
     :param feat_file_path: the file that contains all features.
@@ -27,6 +27,7 @@ def load_test_data(feat_file_path):
     for line in open(feat_file_path):
         line = line.strip()
         if line == '-1':
+            X.append([0 for i in range(feat_dim)])
             continue
         video, feats = line.split('\t')
         if video not in videos:
@@ -42,7 +43,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("model_file", help="path of the trained svm file")
     parser.add_argument("feat_dir", help="dir of feature files")
-    parser.add_argument("feat_dim", help="dimension of features")
+    parser.add_argument("feat_dim", type=int, help="dimension of features")
     parser.add_argument("output_file", help="path to save the prediction score")
     args = parser.parse_args()
 
@@ -51,7 +52,7 @@ def main():
 
     # load data
     feat_file_path = args.feat_dir + '/all.vectors'
-    X = load_test_data(feat_file_path)
+    X = load_test_data(feat_file_path, args.feat_dim)
 
     # predict with the log probability
     print ">> Predicting..."
