@@ -61,8 +61,9 @@ def main():
 
     # train SVM
     print ">> training SVM with {0} kernel on {1} samples".format(args.kernel, len(y))
-    clf = svm.SVC(kernel=args.kernel)
+    clf = svm.SVC(kernel=args.kernel, class_weight='balanced')
     clf.fit(X, y)
+    #print clf.coef_
 
     # save the trained model
     outfile = open(args.output_file, 'wb')
