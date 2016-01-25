@@ -46,7 +46,7 @@ def main():
     parser.add_argument("cluster_num", type=int, help="number of cluster")
     parser.add_argument("file_list", help="the list of videos")
     parser.add_argument("--output_file_path", "-o", type=str,
-                        default="/home/ubuntu/hw1/mfcc/all.vectors")
+                        default="/home/ubuntu/hw1/kmeans/all.vectors")
     args = parser.parse_args()
 
     # open output file
