@@ -66,7 +66,7 @@ def main():
 
         if not os.path.exists(mfcc_path):
             print "{}'s MFCC features not exist! Write vector as -1".format(video_name)
-            output_file.write("-1\n")
+            output_file.write(video_name + "\t-1\n")
             n += 1
             continue
 
