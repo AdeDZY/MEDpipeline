@@ -26,11 +26,11 @@ def load_test_data(feat_file_path, feat_dim):
     X = []
     for line in open(feat_file_path):
         line = line.strip()
-        if line == '-1':
-            X.append([0 for i in range(feat_dim)])
-            continue
         video, feats = line.split('\t')
         if video not in videos:
+            continue
+        if feats == '-1':
+            X.append([0 for i in range(feat_dim)])
             continue
 
         x = [float(t) for t in feats.split(';')]
