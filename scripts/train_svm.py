@@ -30,9 +30,9 @@ def load_training_data(event_name, feat_file_path):
     y = []
     for line in open(feat_file_path):
         line = line.strip()
-        if line == '-1':
-            continue
         video, feats = line.split('\t')
+        if feats == '-1':
+            continue
         if video not in video2label:
             continue
 

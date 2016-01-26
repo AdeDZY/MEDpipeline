@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python
 import numpy
 import os
 import cPickle
@@ -62,6 +62,7 @@ def main():
         output_file.write(video_name + '\t')
         output_file.write(output_str + '\n')
 
+    print "feat dimenstion: {0}!".format(len(vocab))
     print "ASR features generated successfully! Written into {0}!".format("asrfeat/all.vectors")
 
 
