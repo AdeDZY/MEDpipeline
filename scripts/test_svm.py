@@ -17,10 +17,10 @@ def load_test_data(feat_file_path, feat_dim):
     :return: X, the test feature vectors. shape=(n_sample, n_feat)
     """
     test_list = open("/home/ubuntu/hw1/list/test.video")
-    videos = set()
+    videos = {}
     for line in test_list:
         video = line.strip()
-        videos.add(video)
+        videos[video] = 0
     test_list.close()
 
     X = []
@@ -32,6 +32,9 @@ def load_test_data(feat_file_path, feat_dim):
         video, feats = line.split('\t')
         if video not in videos:
             continue
+        videos[video] += 1
+        if videos[video] >= 2:
+            print video
 
         x = [float(t) for t in feats.split(';')]
         X.append(x)
