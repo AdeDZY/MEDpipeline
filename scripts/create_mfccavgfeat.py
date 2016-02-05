@@ -47,6 +47,11 @@ def main():
         video_name = line.strip()
         mfcc_file_path = "/home/ubuntu/hw1/mfcc/{}.mfcc.csv".format(video_name)
 
+        if not os.path.exists(mfcc_file_path):
+            print "{}'s MFCC features not exist! Write vector as -1".format(video_name)
+            output_file.write(video_name + "\t-1\n")
+            continue
+
         vec = avg_mfcc(mfcc_file_path)
         output_str = ';'.join([str(t) for t in vec])
         output_file.write(video_name + '\t')
