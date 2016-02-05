@@ -62,7 +62,7 @@ python scripts/create_kmeans.py kmeans.${cluster_num}.model $cluster_num list/al
 # You can of course explore other better ways, such as TF-IDF, of generating these features.
 echo "Creating ASR features"
 mkdir -p asrfeat
-python scripts/create_asrfeat.py vocab list/all.video || exit 1;
+python scripts/create_asrfeat.py vocab list/all.video stoplist.dft || exit 1;
 
 # Great! We are done!
 echo "SUCCESSFUL COMPLETION"
