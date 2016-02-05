@@ -4,18 +4,22 @@ import os
 import cPickle
 import sys
 import argparse
-
+from nltk.stem import SnowballStemmer
 
 def build_vocab(vocab_file, stopwords_file):
+    stemmer = SnowballStemmer('english')
+
     vocab = {}
     stopwords = set()
     for line in open(stopwords_file):
         word = line.strip()
         stopwords.add(word)
+    stopwords.add("<#s>")
 
     i = 0
     for line in open(vocab_file):
-        word = line.strip()
+        word = line.strip().lower()
+        word = stemmer.stem(word)
         if word not in stopwords:
             vocab[word] = i
             i += 1
