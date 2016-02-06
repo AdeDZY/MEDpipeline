@@ -20,11 +20,11 @@ echo "#       MED with MFCC Features      #"
 echo "#####################################"
 mkdir -p mfcc_pred
 # iterate over the events
-feat_dim_mfcc=200
+feat_dim_mfcc=500
 for event in P001 P002 P003; do
   echo "=========  Event $event  ========="
   # now train a svm model
-  python scripts/train_svm.py $event "kmeans/" $feat_dim_mfcc mfcc_pred/svm.$event.model || exit 1;
+  python scripts/train_svm.py $event "kmeans/" $feat_dim_mfcc mfcc_pred/svm.$event.model -k rbf -g 0.00005 || exit 1;
   # apply the svm model to *ALL* the testing videos;
   # output the score of each testing video to a file ${event}_pred 
   python scripts/test_svm.py mfcc_pred/svm.$event.model "kmeans/" $feat_dim_mfcc mfcc_pred/${event}_pred || exit 1;
@@ -38,11 +38,11 @@ echo "#       MED with ASR Features       #"
 echo "#####################################"
 mkdir -p asr_pred
 # iterate over the events
-feat_dim_asr=799
+feat_dim_asr=716
 for event in P001 P002 P003; do
   echo "=========  Event $event  ========="
   # now train a svm model
-  python scripts/train_svm.py $event "asrfeat/" $feat_dim_asr asr_pred/svm.$event.model || exit 1;
+  python scripts/train_svm.py $event "asrfeat/" $feat_dim_asr asr_pred/svm.$event.model -k rbf -g 0.00001 || exit 1;
   # apply the svm model to *ALL* the testing videos;
   # output the score of each testing video to a file ${event}_pred 
   python scripts/test_svm.py asr_pred/svm.$event.model "asrfeat/" $feat_dim_asr asr_pred/${event}_pred || exit 1;

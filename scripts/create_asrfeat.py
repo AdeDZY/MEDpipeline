@@ -32,9 +32,8 @@ def build_vocab(vocab_file, stopwords_file):
     return vocab, dfs
 
 
-def asr_to_bow(asr_file_path, vocab):
-    stemmer = SnowballStemmer('english')
 def asr_to_bow(asr_file_path, vocab, dfs):
+    stemmer = SnowballStemmer('english')
     vec = [0 for i in range(len(vocab))]
     for line in open(asr_file_path):
         word = line.split()[4]
