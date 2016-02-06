@@ -20,7 +20,7 @@ def build_vocab(vocab_file, stopwords_file):
     for line in open(vocab_file):
         word = line.strip().lower()
         word = stemmer.stem(word)
-        if word not in stopwords:
+        if word not in stopwords and word not in vocab:
             vocab[word] = i
             i += 1
 
@@ -28,9 +28,11 @@ def build_vocab(vocab_file, stopwords_file):
 
 
 def asr_to_bow(asr_file_path, vocab):
+    stemmer = SnowballStemmer('english')
     vec = [0 for i in range(len(vocab))]
     for line in open(asr_file_path):
         word = line.split()[4]
+        word = stemmer.stem(word)
         if word not in vocab:
             continue
         tid = vocab[word]
