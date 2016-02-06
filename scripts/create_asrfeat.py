@@ -5,11 +5,13 @@ import cPickle
 import sys
 import argparse
 from nltk.stem import SnowballStemmer
+import math
 
 def build_vocab(vocab_file, stopwords_file):
     stemmer = SnowballStemmer('english')
 
     vocab = {}
+    dfs = {}
     stopwords = set()
     for line in open(stopwords_file):
         word = line.strip()
@@ -20,14 +22,17 @@ def build_vocab(vocab_file, stopwords_file):
     for line in open(vocab_file):
         word = line.strip().lower()
         word = stemmer.stem(word)
-        if word not in stopwords:
+        if word in vocab:
+            dfs[vocab[word]] += 1
+        if word not in stopwords and word not in vocab:
             vocab[word] = i
+            dfs[i] = 1
             i += 1
 
-    return vocab
+    return vocab, dfs
 
 
-def asr_to_bow(asr_file_path, vocab):
+def asr_to_bow(asr_file_path, vocab, dfs):
     vec = [0 for i in range(len(vocab))]
     for line in open(asr_file_path):
         word = line.split()[4]
@@ -35,7 +40,10 @@ def asr_to_bow(asr_file_path, vocab):
             continue
         tid = vocab[word]
         vec[tid] += 1
+    for i in range(len(vec)):
+        vec[i] *= math.log(883.0/dfs[i])
     return vec
+
 
 
 def main():
@@ -46,7 +54,7 @@ def main():
     args = parser.parse_args()
 
     # get vocab
-    vocab = build_vocab(args.vocab_file, args.stopwords_file)
+    vocab, dfs = build_vocab(args.vocab_file, args.stopwords_file)
 
     # output file
     output_file = open("asrfeat/all.vectors", 'w')
@@ -61,7 +69,7 @@ def main():
             output_file.write(video_name + "\t-1\n")
             continue
 
-        vec = asr_to_bow(asr_file_path, vocab)
+        vec = asr_to_bow(asr_file_path, vocab, dfs)
         output_str = ';'.join([str(t) for t in vec])
         output_file.write(video_name + '\t')
         output_file.write(output_str + '\n')
