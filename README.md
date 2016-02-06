@@ -1,52 +1,32 @@
 # MEDpipeline hw1
 
-## Train Kmeans
-Train Kmeans centroids with smapled MFCC features, the model will be written by cPickle
+## run.feature.sh
+Generate MFCC Bag-of-Words Features and ASR Bag-of-Words feature.
 
-#####Inputs:
+MFCC Bag-of-Words features in ./kmeans/all.vectors. By default K=500.
 
-1. mfcc_csv_file --  input MFCC file
-2. num_cluster -- number of clusters
-3. output_file -- file to write the kmeans model
+ASR Bag-of-Words features in ./asrfeat/all.vectors. 
 
-#####Example:
+## run.med.sh
 
-```
-./scripts/train_kmeans.py select.mfcc.csv 200 kmeans.200.model
-```
+Train and test classifiers 
 
-## Create kmeans
-Create MFCC BOW feature vectors with traned Kmeans model
+MFCC BOW models in ./mfcc_pred/svm.P00i.model. By default, using RBF-kernel SVM with gamma = 0.00005.
 
-#####Inputs:
+ASR BOW models in ./asr_pred/svm.P00i.model. By default, using RBF-kernel SVM with gamma = 0.00001.
 
-1. kmeans_model -- path to the kmeans model
-2. cluster_num -- type=int, number of cluster
-3. file_list -- the list of videos
-4. --output_file_path, -o -- output features file, default="/home/ubuntu/hw1/kmeans/all.vectors
+## run.mfccavg.sh
 
-#####Output:
-The features by default will be written into ./kmeans/all.vectors
+Create avg-MFCC features, and train SVM based on these features.
 
-#####Example:
+Features in ./mfccavg_feat/
+Models and predictions in ./mfccavg_pred/
 
-```
-./scripts/create_kmeans.py kmeans.200.model 200 list/all.video
-```
+## run.rand.sh
 
-## Create ASR Bag-Of-Words features
-Create BOW ASR features
+Create and test random predictions
 
-#####Inputs:
-1. vocab_file -- path to the vocabulary file
-2. file_list -- the list of videos
-3. stopwords_file -- stopwords file path
+Results writtein in ./rand_pred/avg_rand.res
 
-#####Output:
-The features will be written into ./asrfeat/all.vectors
 
-#####Example:
 
-```
-./scripts/create_asrfeat.py vocab list/all.video stoplist.dft
-```
