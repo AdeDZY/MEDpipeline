@@ -53,6 +53,7 @@ def main():
     parser.add_argument("output_file", help="path to save the svm model")
     parser.add_argument("--kernel", "-k", help="kernel for the svm",
                         choices=["linear", "poly", "rbf"], default='linear')
+    parser.add_argument("--gamma", "-g", help="gamma for rbf and sigmoid kernel", type=float)
     args = parser.parse_args()
 
     # load training data
@@ -61,7 +62,10 @@ def main():
 
     # train SVM
     print ">> training SVM with {0} kernel on {1} samples".format(args.kernel, len(y))
-    clf = svm.SVC(kernel=args.kernel, class_weight='balanced')
+    if args.gamma:
+        clf = svm.SVC(kernel=args.kernel, class_weight='balanced', gamma=args.gamma)
+    else:
+        clf = svm.SVC(kernel=args.kernel, class_weight='balanced')
     clf.fit(X, y)
     #print clf.coef_
 

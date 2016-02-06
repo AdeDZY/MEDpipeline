@@ -13,7 +13,7 @@ def main():
     outfile = open(args.output_file, 'w')
     for i in range(n):
         score = random.random()
-        outfile.write('{0\n'.format(score))
+        outfile.write('{0}\n'.format(score))
     outfile.close()
 
 if __name__ == '__main__':

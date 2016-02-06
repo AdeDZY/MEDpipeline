@@ -32,10 +32,13 @@ def build_vocab(vocab_file, stopwords_file):
     return vocab, dfs
 
 
+def asr_to_bow(asr_file_path, vocab):
+    stemmer = SnowballStemmer('english')
 def asr_to_bow(asr_file_path, vocab, dfs):
     vec = [0 for i in range(len(vocab))]
     for line in open(asr_file_path):
         word = line.split()[4]
+        word = stemmer.stem(word)
         if word not in vocab:
             continue
         tid = vocab[word]
@@ -43,7 +46,6 @@ def asr_to_bow(asr_file_path, vocab, dfs):
     for i in range(len(vec)):
         vec[i] *= math.log(883.0/dfs[i])
     return vec
-
 
 
 def main():
